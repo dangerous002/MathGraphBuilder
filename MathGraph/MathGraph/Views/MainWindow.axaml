@@ -1,0 +1,66 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:MathGraph.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="700"
+        x:Class="MathGraph.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/logo.ico"
+        Title="Math Graph Builder"
+        Width="900"
+        Height="700"
+        Background="#1e1e1f"
+        xmlns:oxy="clr-namespace:OxyPlot.Avalonia;assembly=OxyPlot.Avalonia">
+    
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <DockPanel>
+        <Border Height="50" DockPanel.Dock="Top" Background="#19191a" Width="600" CornerRadius="0 0 15 15">
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" 
+                   FontFamily="Arial" FontSize="20" FontWeight="600" Foreground="#a0a1a3">
+                 Math Graph Builder
+            </Label>
+        </Border>
+        <Border  DockPanel.Dock="Top">
+            <StackPanel Margin="0 35 0 35" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin=" 0 0 0 15">
+                    <TextBox Width="250" Height="40" Margin="0 0 20 0" 
+                             Background="#19191a" BorderThickness="0"
+                             CornerRadius="8" FontSize="16" FontFamily="Arial"
+                             Watermark="Example: cos(2*x)+log(10+x^2)"
+                             Text="{Binding FunctionText}"/>
+                    <Button CornerRadius="8" Height="40" Background="#19191a" 
+                            Foreground="#a0a1a3" Command="{Binding Button_Click}">
+                        <Label VerticalAlignment="Center" FontSize="16" FontFamily="Arial" 
+                               Foreground="#a0a1a3" >
+                            Build graph
+                        </Label>
+                    </Button>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0 0 0 15">
+                     <Label FontFamily="Arial" Foreground="#a0a1a3" FontSize="16" FontWeight="700" VerticalAlignment="Center" Margin="0 0 20 0"> Min/Max X</Label>
+                     <NumericUpDown Value="{Binding MinX}" Increment="1000" Minimum="-100000000" Maximum="100000000" Background="#19191a" Foreground="#a0a1a3" Margin="0 0 20 0"/>
+                     <NumericUpDown Value="{Binding MaxX}" Increment="1000" Minimum="-100000000" Maximum="100000000" Background="#19191a" Foreground="#a0a1a3" Margin="0 0 0 0"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Label FontFamily="Arial" Foreground="#a0a1a3" FontSize="16" FontWeight="700" VerticalAlignment="Center" Margin="0 0 20 0"> Step X</Label>
+                    <NumericUpDown Value="{Binding StepX}" Increment="0.1" Minimum="0.001" Maximum="100" Background="#19191a" Foreground="#a0a1a3" Margin="0 0 0 0"/>
+                    <Button Margin="15 0 0 0" CornerRadius="8" Height="40" Background="#19191a" 
+                            Foreground="#a0a1a3" Command="{Binding FunctionListButton_Click}">
+                        <Label VerticalAlignment="Center" FontSize="16" FontFamily="Arial" 
+                               Foreground="#a0a1a3" >
+                            Functions List
+                        </Label>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        <Border  Height="400" Width="600">
+            <oxy:PlotView Model="{Binding GraphModel}" Width="600" Height="400" Padding="0"/>
+        </Border>
+    </DockPanel>
+
+</Window>
